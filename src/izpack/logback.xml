@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user -->
+<!-- -->
+<!-- For professional support please see -->
+<!-- http://www.qos.ch/shop/products/professionalSupport -->
+<!-- -->
+<configuration  scan="true">
+	<appender name="HTTPCLIENTAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy -->
+		<!--for further documentation -->
+		<File>${tomcat.home}/logs/rentalMBOD3/httpclient.log</File>
+		<encoder>
+			<pattern>%d [%t] %-5p %c - [%X{device.id.hex},%X{device.carrier},%X{device.channel},%X{device.manufacture},%X{device.model}][%X{app.session}] - %replace(%m){'\d{14,16}', 'XXXX'}%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${tomcat.home}/logs/rentalMBOD3/httpclient.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<appender name="filelogger"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy -->
+		<!--for further documentation -->
+		<File>${tomcat.home}/logs/rentalMBOD3/web.log</File>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+		<encoder>
+			<pattern>%d [%t] %-5p %c - [%X{device.id.hex},%X{device.carrier},%X{device.channel},%X{device.manufacture},%X{device.model}][%X{app.session}] - %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${tomcat.home}/logs/rentalMBOD3/web.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<appender name="telespreelogger"
+        class="com.telespree.barracuda.log.EventLogAppender">
+        <filter class="com.telespree.barracuda.log.EventLogFilter">
+            <exclusionRegularExpression></exclusionRegularExpression>
+        </filter>
+    </appender> 
+	<logger name="com.telespree.apps.sprint.mbod.rental" level="INFO" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="httpclient" additivity="false" level="DEBUG">
+		<appender-ref ref="HTTPCLIENTAppender" />
+	</logger>
+	<logger name="org.hibernate" level="ERROR" />
+	<logger name="org.apache.commons" level="ERROR" />
+	<root level="WARN">
+		<appender-ref ref="filelogger" />
+		<appender-ref ref="telespreelogger" />
+	</root>
+</configuration>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/util 
+http://www.springframework.org/schema/util/spring-util-3.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/jee 
+http://www.springframework.org/schema/jee/spring-jee-3.0.xsd 
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
+http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
+	<import resource="classpath:applicationContext-core.xml" />
+	<context:property-placeholder location="classpath:rentalMBOD.properties" />
+	<context:component-scan
+		base-package="com.telespree.apps.sprint.mbod.rental.service.impl com.telespree.apps.sprint.mbod.rental.controller.rest" />
+	<tx:annotation-driven />
+	<import resource="classpath:appContext-dao.xml" />
+	<mvc:annotation-driven />
+	<!-- <ehcache:annotation-driven /> <ehcache:config cache-manager="cacheManager"> 
+		<ehcache:evict-expired-elements interval="60" /> </ehcache:config> <bean 
+		id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"> 
+		<property name="configLocation" value="/WEB-INF/ehcache.xml" /> </bean> -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
+	</bean>
+	<jee:jndi-lookup id="ocsDataSource" jndi-name="${ocs.jdbc.jndi}"
+		cache="true" resource-ref="true" lookup-on-startup="true" />
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="ocsDataSource" />
+		<property name="annotatedClasses" ref="common-annotatedClasses" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED</prop>
+				<prop key="find*">PROPAGATION_REQUIRED</prop>
+				<prop key="load*">PROPAGATION_REQUIRED</prop>
+				<prop key="store*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+	</bean>
+	<bean id="launchAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.LaunchAction"
+		scope="prototype">
+	</bean>
+	<bean id="topupStartAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.topup.StartAction"
+		scope="prototype">
+	</bean>
+	<bean id="productAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.ProductAction"
+		scope="prototype">
+	</bean>
+	<bean id="subscriberAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.SubscriberAction"
+		scope="prototype">
+	</bean>
+	<bean id="purchaseAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.PurchaseAction"
+		scope="prototype">
+	</bean>
+	<bean id="finalAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.FinalAction"
+		scope="prototype">
+	</bean>
+	<!-- <bean id="accessAction" class="com.telespree.apps.sprint.mbod.rental.controller.AccessAction" 
+		scope="prototype"> </bean> -->
+	<bean id="errorAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.ErrorAction"
+		scope="prototype">
+	</bean>
+	<bean id="timeoutAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.TimeoutAction"
+		scope="prototype">
+	</bean>
+	<bean id="languageAction"
+		class="com.telespree.apps.sprint.mbod.rental.controller.LanguageAction"
+		scope="prototype">
+	</bean>
+	<bean id="accountService" class="com.telespree.abmf.service.AccountService">
+	</bean>
+	<bean id="deviceService" class="com.telespree.abmf.service.DeviceService">
+	</bean>
+	<bean id="carrierService" class="com.telespree.abmf.service.CarrierService">
+	</bean>
+	<bean id="productService" class="com.telespree.barracuda.product.service.ProductService">
+	</bean>
+	<bean id="promoCodeService"
+		class="com.telespree.barracuda.product.service.PromoCodeService">
+	</bean>
+	<bean id="rentalService" class="com.telespree.rental.service.RentalService">
+		<property name="deviceService" ref="deviceService" />
+	</bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.service.host}" />
+		<property name="port" value="${email.service.port}" />
+		<property name="username" value="${email.service.username}" />
+		<property name="password" value="${email.service.password}" />
+		<property name="defaultEncoding" value="UTF-8" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${email.service.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${email.service.tls.enable}
+				</prop>
+				<prop key="mail.mime.charset">UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+	<util:properties id="mbodProperties" location="classpath:rentalMBOD.properties" />
+</beans>

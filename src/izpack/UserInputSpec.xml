@@ -1,0 +1,52 @@
+<userInput>
+	<panel order="0">
+		<field type="title" txt="Tomcat Information" bold="true" size="1" />
+		<field type="text" variable="tomcat.home">
+			<!-- <description txt="The directory where tomcat is installed"/> -->
+			<spec txt="Enter Tomcat Location:" size="30" set="" />
+			<!-- <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Value 
+				for Tomcat Location cannot be empty." /> -->
+			<validator
+				class="com.telespree.common.installer.validator.FileExistingValidator"
+				txt="Tomcat Location entered does not exist." />
+		</field>
+	</panel>
+	<panel order="1">
+		<field type="title" txt="MBOD Database Information" bold="true"
+			size="1" />
+		<field type="text" variable="mbod.jdbc.host">
+			<spec txt="Database Host:" size="30" set="tsp-db01" />
+			<validator class="com.izforge.izpack.util.NotEmptyValidator"
+				txt="Database Host cannot be empty." />
+		</field>
+		<field type="space" />
+		<field type="text" variable="mbod.jdbc.port">
+			<spec txt="Database Port" size="10" set="1521" />
+			<validator class="com.izforge.izpack.util.NotEmptyValidator"
+				txt="Database Port cannot be empty." />
+		</field>
+		<field type="space" />
+		<field type="text" variable="mbod.jdbc.sid">
+			<spec txt="Database SID(System ID)" size="20" set="tsp" />
+			<validator class="com.izforge.izpack.util.NotEmptyValidator"
+				txt="Database SID cannot be empty." />
+		</field>
+		<field type="space" />
+		<field type="text" variable="mbod.jdbc.user">
+			<spec txt="Database User" size="30" />
+			<validator class="com.izforge.izpack.util.NotEmptyValidator"
+				txt="Database User cannot be empty." />
+		</field>
+		<field type="space" />
+		<field type="password" variable="mbod.jdbc.password">
+			<spec>
+				<pwd txt="Database Password:" size="30" />
+				<pwd txt="Retype Database Password:" size="30" />
+			</spec>
+			<validator class="com.izforge.izpack.util.NotEmptyValidator"
+				txt="Database Password cannot be empty." />
+			<validator class="com.izforge.izpack.util.PasswordEqualityValidator"
+				txt="Database Passwords must match." />
+		</field>
+	</panel>
+</userInput>

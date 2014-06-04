@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="topup" namespace="/topup" extends="mbod">
+
+		<action name="start" class="topupStartAction">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result name="desktop">
+                <param name="location">/desktop/redirect.jsp</param>
+            </result>
+            <result name="desktopError">
+                <param name="location">/desktop/redirect-error.jsp</param>
+            </result>
+            <result name="mobile">
+                <param name="location">/mobile/redirect.jsp</param>
+            </result>
+            <result name="mobileError">
+                <param name="location">/mobile/redirect-error.jsp</param>
+            </result>
+		</action>
+		
+        <!-- 
+		<action name="deviceAccess" class="accessAction">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result name="success" type="redirect-action">
+				<param name="actionName">summary</param>
+			</result>
+		</action>
+		 -->
+
+	</package>
+
+</struts>

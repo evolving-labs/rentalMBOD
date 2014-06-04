@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context
+	docBase="${tomcat.home}${FILE_SEPARATOR}deployment${FILE_SEPARATOR}${project.build.finalName}.war">
+	<ResourceLink name="TSAppDataSource" global="TSAppDataSource"
+		type="javax.sql.DataSource" />
+	<ResourceLink name="TSAppSessionDataSource" global="TSAppSessionDataSource"
+		type="javax.sql.DataSource" />
+	<ResourceLink name="TSDataSource" global="TSDataSource"
+		type="javax.sql.DataSource" />
+	<ResourceLink name="TSAppISMDataSource" global="TSAppISMDataSource"
+		type="javax.sql.DataSource" />
+	<ResourceLink name="OCSDataSource" global="OCSDataSource"
+        type="javax.sql.DataSource" />
+	<Loader className="org.apache.catalina.loader.VirtualWebappLoader"
+		virtualClasspath="${tomcat.home}${FILE_SEPARATOR}telespree${FILE_SEPARATOR}rentalMBOD3" />
+</Context>

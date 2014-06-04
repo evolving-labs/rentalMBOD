@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>0.9</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>ts</short-name>
+	<uri>/telespree-tags</uri>
+	<display-name>"Telespree Tags"</display-name>
+	<description>
+		<![CDATA["Used to build custom UI elements specific to telespree applications"]]>
+	</description>
+	<tag>
+		<name>image</name>
+		<tag-class>telespree.apps.fwk.internal.resource.ImageTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			<![CDATA[Display proper HTML for an image]]>
+		</description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				<![CDATA[Name of image with extension]]>
+			</description>
+		</attribute>
+	</tag>
+</taglib>

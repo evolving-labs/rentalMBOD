@@ -1,0 +1,42 @@
+<div class="header">
+	<div id="menubar">
+	<img class="logo" src="get.image?name=${logoFileName}&amp;scope=${scopeString}">
+	<ul id="css3menu1" >
+		<c:if test="${supportPINRedemption}">
+			<li class="nohover" id="balance-item"><a href="#" class="menu-link"><img class="dash-icon" src="get.image?name=${planIconName}&amp;scope=${scopeString}" width="20" height="28" alt="" /><span><s:text name="dash.balance" />&nbsp;<span id="balanceHolder"></span></span></a></li>
+		</c:if>
+		<li class="topmenu"><a href="javascript:showDatameterDialog()" class="menu-link"><img class="dash-icon" src="get.image?name=${downloadIconName}&amp;scope=${scopeString}" width="20" height="28" alt="" /><span><s:text name="dash.dm" /></span></a></li>
+		<c:if test="${supportPINRedemption}">
+		<li class="topmenu">
+			<a href="#" class="menu-link">
+				<img class="dash-icon" src="get.image?name=${pinIconName}&amp;scope=${scopeString}" width="20" height="28" alt="" />
+					<span>
+					<s:text name="dash.redeem" />
+					</span>
+		</a>
+		<ul id="pin-list" >
+		<li>
+		<div id="pin-form">
+			<s:url id="redeemPINUrl" action="redeemPIN" includeParams="none">
+				<s:param name="sessionid" value="%{id}" />
+			</s:url>
+			<form action="${redeemPINUrl}" method="post" id="redeemPINForm">
+			    <input type="text" id="pin" name="pin" placeholder="PIN" maxlength="25" size="15">
+			        <button id="pin-submit" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+						<span class="ui-button-text"><span style="font-size:9px;"><s:text name="button.go" /></span>
+						</span>
+				    </button>
+			</form>
+		</div>
+		</li>
+		</ul>
+		</li>
+		</c:if>
+		<li class="topmenu" id="loginAndNameTextToggle"><a href="#" class="menu-link"><img class="dash-icon" src="get.image?name=${accountIconName}&amp;scope=${scopeString}" width="20" height="28" alt="" /><span id="username-toggle-text"><s:text name="dash.auth" /></span></a>
+		<ul id="cred-ddl">
+			<li><a href="javascript:showLoginDialog()"><s:text name="dash.login.text" /></a></li>
+			<li><a href="javascript:showSignupDialog()"><s:text name="dash.signup.text" /></a></li>
+		</ul></li>
+		</ul>
+	</div>
+</div>

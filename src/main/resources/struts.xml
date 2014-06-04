@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.objectFactory"
+		value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+
+	<package name="base" extends="common">
+		<action name="timeout" class="timeoutAction">
+			<interceptor-ref name="telespreeNoTimeoutStack"></interceptor-ref>
+			<result>
+				<param name="location">/timeout.jsp</param>
+			</result>
+			<result name="static">
+				<param name="location">/timeout.jsp</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- Package for common actions and results. This package is abstract. -->
+	<package name="mbod" extends="base" namespace="/mbod">
+
+		<global-results>
+			<result name="notAuthenticated" type="chain">
+				<param name="actionName">credentials</param>
+			</result>
+			<result name="notRetryable" type="chain">
+				<param name="actionName">error</param>
+			</result>
+		</global-results>
+
+		<action name="ui/launch" class="launchAction">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result name="topup" type="chain">
+				<param name="actionName">start</param>
+				<param name="namespace">/topup</param>
+			</result>
+		</action>
+
+		<action name="ui/selfcare"
+			class="telespree.apps.fwk.internal.struts2.action.SelfcareLaunchAction">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result type="chain">ui/launch</result>
+		</action>
+
+		<action name="language" class="languageAction">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+            <result>
+                <param name="location">/error.jsp</param>
+            </result>
+		</action>
+
+		<action name="error" class="errorAction">
+			<interceptor-ref name="telespreeNoTimeoutStack"></interceptor-ref>
+			<result>
+				<param name="location">/error.jsp</param>
+			</result>
+			<result name="static">
+				<param name="location">/error.jsp</param>
+			</result>
+		</action>
+
+		<action name="timeout" class="timeoutAction">
+			<interceptor-ref name="telespreeNoTimeoutStack"></interceptor-ref>
+			<result>
+				<param name="location">/timeout.jsp</param>
+			</result>
+			<result name="static">
+				<param name="location">/timeout.jsp</param>
+			</result>
+		</action>
+
+		<action name="device" class="launchAction" method="device">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="selectPlan" class="productAction" method="selectPlan">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="redeemPromo" class="purchaseAction" method="redeemPromo">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="commitPromo" class="purchaseAction" method="commitPromo">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="tcContent" class="productAction" method="tcContent">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result type="freemarker">
+				<param name="location">tc.ftl</param>
+			</result>
+		</action>
+
+		<action name="tc" class="productAction" method="tc">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="login" class="subscriberAction" method="login">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="signup" class="subscriberAction" method="signup">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="forgetpassword" class="subscriberAction" method="forgetpassword">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="resetpassword" class="subscriberAction" method="resetpassword">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="redeemPIN" class="subscriberAction" method="redeemPIN">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="logDatameterDownload" class="subscriberAction"
+			method="logDatameterDownload">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="usage" class="launchAction" method="usage">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/usage.jsp</param>
+			</result>
+		</action>
+
+		<action name="free" class="purchaseAction" method="free">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="cc" class="purchaseAction" method="cc">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="guest" class="purchaseAction" method="guest">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+		<action name="finish" class="finalAction">
+			<interceptor-ref name="telespreeCompleteStack"></interceptor-ref>
+			<result>
+				<param name="location">/json.jsp</param>
+			</result>
+		</action>
+
+	</package>
+
+	<include file="struts-topup.xml" />
+
+</struts>
