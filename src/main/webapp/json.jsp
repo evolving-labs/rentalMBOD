@@ -68,5 +68,6 @@
     "supportPrivacyPolicy": <c:choose><c:when test="${supportPrivacyPolicy}">true</c:when><c:otherwise>false</c:otherwise></c:choose>,
     "privacyPolicyUrl": "${privacyPolicyUrl}",
     "mvnoDmWinUrl": "${mvnoDmWinUrl}",
-    "mvnoDmMacUrl": "${mvnoDmMacUrl}"
+    "mvnoDmMacUrl": "${mvnoDmMacUrl}",
+    "selectedPlanId": "${mbodSession.selectedProduct.id}"
 }
